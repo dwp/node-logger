@@ -1,0 +1,9 @@
+.coverage
+.nyc_output
+.scanner
+.sonarlint
+node_modules
+.DS_Store
+.vscode/
+tests/.DS_Store
+.idea

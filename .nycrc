@@ -1,0 +1,12 @@
+{
+  "extends": "@dwp/nyc-config-base",
+  "include": [
+    "src/**/*.js"
+  ],
+  "exclude": [
+    ".coverage/**",
+    ".eslintrc.js",
+    ".huskyrc.js",
+    "lint-staged.config.js"
+  ]  
+}
