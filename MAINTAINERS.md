@@ -77,8 +77,8 @@ At this point, wait for the internal CI pipeline to go green before continuing.
 
 ```
 # Push to Github
-git push --tags git@github.com:dwp/govuk-casa.git master
-git push git@github.com:dwp/govuk-casa.git master
+git push --tags git@github.com:dwp/node-logger.git master
+git push git@github.com:dwp/node-logger.git master
 ```
 
 Wait for the travis CI job to go green, before then publishing to [npmjs.com](https://npmjs.com/):

@@ -2,6 +2,14 @@
   "name": "@dwp/node-logger",
   "version": "0.9.0",
   "description": "A node logger, using pino, to implement the common DWP json log format and support for OpenTracing",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dwp/node-logger.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dwp/node-logger/issues"
+  },
+  "homepage": "https://github.com/dwp/node-logger#readme",
   "author": "DWP",
   "contributors": [
     {
