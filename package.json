@@ -1,6 +1,6 @@
 {
   "name": "@dwp/node-logger",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "A node logger, using pino, to implement the common DWP json log format and support for OpenTracing",
   "repository": {
     "type": "git",
@@ -45,8 +45,6 @@
     "lint-fix": "eslint --fix ."
   },
   "devDependencies": {
-    "@commitlint/cli": "8.3.5",
-    "@dwp/commitlint-config-base": "1.1.0",
     "@dwp/eslint-config-base": "4.1.0",
     "@dwp/eslint-config-mocha": "1.0.0",
     "@dwp/nyc-config-base": "1.0.0",
