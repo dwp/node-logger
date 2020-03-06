@@ -1,7 +1,7 @@
 const os = require('os');
 const pino = require('pino');
 const pinoDebug = require('pino-debug');
-const uuid = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 const objectPath = require('object-path');
 const BasicLogger = require('./basic-logger');
 const TracingLogger = require('./tracing-logger.js');
@@ -218,7 +218,7 @@ class Logger {
     const config = {
       base: Logger.createPinoBase(loggerOptions),
       messageKey: loggerOptions.messageKey,
-      changeLevelName: loggerOptions.levelKey,
+      levelKey: loggerOptions.levelKey,
       level: loggerOptions.logLevel,
       useLevelLabels: true,
       timestamp: () => `,"${loggerOptions.timestampKey}":"${(new Date()).toISOString()}"`,
@@ -437,7 +437,7 @@ class Logger {
     }
 
     if (id == null || id === '') {
-      id = uuid();
+      id = uuidv4();
     }
 
     openTracing[options.requestIdHeaderName] = id;
@@ -463,7 +463,7 @@ class Logger {
       if (httpLogLevel === 'trace') {
         // we dont want to create a span if we are ignoring this request
         req.openTracing = {};
-        req.openTracing[options.requestIdHeaderName] = uuid();
+        req.openTracing[options.requestIdHeaderName] = uuidv4();
       } else {
         req.openTracing = Logger.createOpenTracingSpan(req, options, logger.traceLogger);
       }
