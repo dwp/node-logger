@@ -1,3 +1,18 @@
+<a name="0.14.1"></a>
+## [0.14.1](https://github.com/dwp/node-logger/compare/0.14.0...0.14.1) (2020-03-23)
+
+
+
+<a name="0.14.0"></a>
+# [0.14.0](https://github.com/dwp/node-logger/compare/0.13.0...0.14.0) (2020-03-23)
+
+
+### Bug Fixes
+
+* updated dependencies and make pino-debug conditional as it adds an unneeded dependency order bug for projects that dont use it ([abb54e8](https://github.com/dwp/node-logger/commit/abb54e8))
+
+
+
 <a name="0.13.0"></a>
 # [0.13.0](https://github.com/dwp/node-logger/compare/0.12.0...0.13.0) (2020-03-06)
 

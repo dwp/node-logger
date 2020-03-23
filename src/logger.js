@@ -1,6 +1,5 @@
 const os = require('os');
 const pino = require('pino');
-const pinoDebug = require('pino-debug');
 const { v4: uuidv4 } = require('uuid');
 const objectPath = require('object-path');
 const BasicLogger = require('./basic-logger');
@@ -241,6 +240,8 @@ class Logger {
     baseLogger.loggerClass = Logger;
 
     if (loggerOptions.enableDebugLoggingLibrary) {
+      // eslint-disable-next-line global-require
+      const pinoDebug = require('pino-debug');
       pinoDebug(baseLogger, {
         auto: true,
         map: {
