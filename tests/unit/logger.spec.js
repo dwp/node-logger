@@ -118,7 +118,7 @@ describe('Logger in pino mode', () => {
 });
 
 describe('Logger in basic mode', () => {
-  it('should output a json when a log is called', (done) => {
+  it('basic should output a json when a log is called', (done) => {
     const logger = Logger({
       enableOpenTracing: false,
       basicLogging: true,

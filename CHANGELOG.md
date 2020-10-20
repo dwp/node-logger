@@ -1,59 +1,39 @@
-<a name="0.14.1"></a>
-## [0.14.1](https://github.com/dwp/node-logger/compare/0.14.0...0.14.1) (2020-03-23)
+## [0.14.3](https://github.com/dwp/node-logger/compare/0.14.2...0.14.3) (2020-10-20)
 
 
 
-<a name="0.14.0"></a>
-# [0.14.0](https://github.com/dwp/node-logger/compare/0.13.0...0.14.0) (2020-03-23)
-
-
-### Bug Fixes
-
-* updated dependencies and make pino-debug conditional as it adds an unneeded dependency order bug for projects that dont use it ([abb54e8](https://github.com/dwp/node-logger/commit/abb54e8))
+## [0.14.2](https://github.com/dwp/node-logger/compare/0.13.0...0.14.2) (2020-03-23)
 
 
 
-<a name="0.13.0"></a>
-# [0.13.0](https://github.com/dwp/node-logger/compare/0.12.0...0.13.0) (2020-03-06)
-
-
-### Bug Fixes
-
-* updated dependencies ([abac100](https://github.com/dwp/node-logger/commit/abac100))
+# [0.13.0](https://github.com/dwp/node-logger/compare/0.11.0...0.13.0) (2020-03-06)
 
 
 ### Features
 
-* added public repo to package ([d38185e](https://github.com/dwp/node-logger/commit/d38185e))
+* updated dependencies and added public repo ([29c360e](https://github.com/dwp/node-logger/commit/29c360e991e44bf628baa648e72c72a80063b0fd))
 
 
 
-<a name="0.9.0"></a>
-# [0.9.0](https://github.com/dwp/node-logger/compare/0.8.0...0.9.0) (2020-02-18)
+# [0.11.0](https://github.com/dwp/node-logger/compare/0.10.0...0.11.0) (2020-03-04)
 
 
 ### Bug Fixes
 
-* checkmarx fix ([35edddf](https://github.com/dwp/node-logger/commit/35edddf))
-* checkmarx fix ([ee5de8a](https://github.com/dwp/node-logger/commit/ee5de8a))
-* gitlab pipeline iteration ([a93f15f](https://github.com/dwp/node-logger/commit/a93f15f))
-* gitlab pipeline iteration ([c9a3258](https://github.com/dwp/node-logger/commit/c9a3258))
+* disabled commit linting because of vulnerabilities ([55197f0](https://github.com/dwp/node-logger/commit/55197f0d237fbf884f996a888394250053c94dfa))
+
+
+
+# [0.10.0](https://github.com/dwp/node-logger/compare/0.9.0...0.10.0) (2020-02-28)
+
+
+
+# [0.9.0](https://github.com/dwp/node-logger/compare/827a2c4f6e8744eb36cbe82381befbe6bcde8493...0.9.0) (2020-02-28)
 
 
 ### Features
 
-* added gitlab pipeline ([e205efc](https://github.com/dwp/node-logger/commit/e205efc))
-* open source process, contrib and maintainers added ([4d141fe](https://github.com/dwp/node-logger/commit/4d141fe))
-
-
-
-<a name="0.8.0"></a>
-# [0.8.0](https://github.com/dwp/node-logger/compare/659c981...0.8.0) (2020-02-04)
-
-
-### Features
-
-* node logger initial commit ([659c981](https://github.com/dwp/node-logger/commit/659c981))
+* Initial checkin v0.9.0 ([827a2c4](https://github.com/dwp/node-logger/commit/827a2c4f6e8744eb36cbe82381befbe6bcde8493))
 
 
 

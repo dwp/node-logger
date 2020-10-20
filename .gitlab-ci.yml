@@ -77,35 +77,6 @@ dep-vuln:
   script:
     - npm run security:audit
 
-checkmarx:
-  stage: security-tests
-  image: docker:latest@sha256:bc7f740e2c0a8a9ec43b009b7cd35aafb10e69488a017110ad723003fbd3a7ae
-  services:
-    - docker:dind@sha256:5b45c3565b02cb453fc0ef33e3d082006293d5d002d9cfd06d6ff290724c2d37
-  tags:
-    - transparent-docker-in-docker
-  before_script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  script:
-    - apk add jq
-    - mkdir -p .checkmarx/ && chmod 0777 .checkmarx/
-    - |
-      docker run --rm \
-      -v $(pwd):/home/checkmarx/src:ro -v $(pwd)/.checkmarx:/home/checkmarx/src/.checkmarx:rw \
-      -e CHECKMARX_REPORT_FORMAT=PDF \
-      $CI_REGISTRY/engineering-practice/checkmarx-cli:latest \
-      checkmarx ${CI_PROJECT_NAME}@${CI_PROJECT_NAMESPACE}#${CI_COMMIT_REF_NAME} Engineering
-    - cat .checkmarx/checkmarx.json
-    - breach=$(cat .checkmarx/checkmarx.json | jq ".vulnerability_counts.high + .vulnerability_counts.medium > 0")
-    - if [ "$breach" != "false" ]; then exit 1; fi
-  artifacts:
-    when: always
-    expire_in: 30 mins
-    paths:
-      - .checkmarx/
-  <<: *not-branches
-  allow_failure: false
-
 outdated:
   stage: security-tests
   <<: *executor-docker
