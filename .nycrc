@@ -1,12 +1,46 @@
 {
-  "extends": "@dwp/nyc-config-base",
-  "include": [
-    "src/**/*.js"
-  ],
-  "exclude": [
-    ".coverage/**",
-    ".eslintrc.js",
-    ".huskyrc.js",
-    "lint-staged.config.js"
-  ]  
+    "all": true,
+    "branches": 0,
+    "cache": true,
+    "check-coverage": true,
+    "exclude": [
+        "node_modules/**",
+        "tests/**",
+        "commitlint.config.js",
+        ".coverage/**",
+        ".eslintrc.js",
+        ".huskyrc.js",
+        "lint-staged.config.js"
+    ],
+    "functions": 0,
+    "include": [
+        "**/*.js"
+    ],
+    "lines": 60,
+    "per-file": true,
+    "produce-source-map": true,
+    "report-dir": ".coverage",
+    "reporter": [
+        "lcov",
+        "text-summary"
+    ],
+    "statements": 0,
+    "watermarks": {
+        "branches": [
+            60,
+            80
+        ],
+        "functions": [
+            60,
+            80
+        ],
+        "lines": [
+            60,
+            80
+        ],
+        "statements": [
+            60,
+            80
+        ]
+    }
 }

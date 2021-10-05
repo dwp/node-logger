@@ -10,7 +10,6 @@ const { expect } = chai;
 
 class SimulatedResponse extends EventEmitter {}
 
-
 describe('Logger http request logging', () => {
   if ('JAEGER_AGENT_HOST' in process.env) {
     delete process.env.JAEGER_AGENT_HOST;
@@ -138,12 +137,10 @@ describe('Logger http request logging', () => {
       // must have taken over 19 ticks because we are waiting for 20 ticks
       expect(value.res.responseTime).to.be.above(19);
 
-
       origLog(value, message);
 
       expect(logger.loggerOptions.outputStream.logs.length).to.equal(1);
       const resLog = JSON.parse(logger.loggerOptions.outputStream.logs[0]);
-
 
       if (logger.loggerOptions.logRequestHeaders) {
         expect(resLog.req.headers.test).to.equal('headerValue');
@@ -154,7 +151,6 @@ describe('Logger http request logging', () => {
       expect(resLog.nameSpace).to.equal('http');
       expect(resLog.message).to.equal('POST /static/js/test.js HTTP/1.1 200');
       expect(resLog.pid).to.be.above(0);
-
 
       if (logger.loggerOptions.logRequestHeaders) {
         expect(resLog.req.headers.test).to.equal('headerValue');
@@ -206,7 +202,6 @@ describe('Logger http request logging', () => {
     });
     testHTTPReq(logger, done, 'info', { 'x-request-id': 'e1850613-0627-426b-test-a1c3682c7085', 'x-client': 'client-app' });
   });
-
 
   it('should log a http request with cookies and only request headers', (done) => {
     const logger = Logger({

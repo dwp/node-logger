@@ -1,4 +1,3 @@
-
 class BasicLogger {
   constructor(pinoLogger) {
     this.pinoLogger = pinoLogger;

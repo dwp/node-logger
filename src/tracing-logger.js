@@ -1,7 +1,6 @@
 const opentracing = require('opentracing');
 const jaegerClient = require('jaeger-client');
 
-
 class TracingLogger {
   constructor(logger, specifiedOptions) {
     this.options = {
@@ -29,7 +28,6 @@ class TracingLogger {
       const jaegerOptions = {
         logger,
       };
-
 
       this.tracer = jaegerClient.initTracerFromEnv(jaegerConfig, jaegerOptions);
     }
@@ -61,7 +59,6 @@ class TracingLogger {
 
     const span = this.tracer.startSpan(operation, spanOptions);
 
-
     return span;
   }
 
@@ -84,6 +81,5 @@ class TracingLogger {
     return headersCarrier;
   }
 }
-
 
 module.exports = TracingLogger;

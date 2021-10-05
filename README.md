@@ -12,11 +12,16 @@
 9. [Enabling Request chaining/tracing](#9-enabling-request-chainingtracing)
 10. [Upgrading from other loggers](#10-upgrading-from-other-loggers)
 11. [Application Logging best practice](#11-application-logging-best-practice)
+12. [Changes from previous version](#12-changes-from-previous-version)
 
 
 ## 1. What is it
 
 A node logger, to implement the common DWP json log format and [Open Tracing](https://opentracing.io).
+
+### Upgrading from a previous version ?
+Check out [Changes from previous version](#12-changes-from-previous-version)
+
 
 
 ## 2. Why another logger library?
@@ -461,4 +466,39 @@ The component produces output that matches the default Logstash Logback Encoder 
 | `trace`, `debug` | Information interesting for Developers, when trying to debug a problem | DEV |
 | `info` | Information interesting for Support staff trying to figure out the context of a given error | DEV, PROD |
 | `warn`, `error`, `fatal` | Problems and Errors depending on level of damage | DEV, PROD |
+
+
+## 12. Changes from previous version
+
+This version uses has switched from pino v5 to v6, which has the following functionality change.
+
+Since pino v6, we do not automatically concatenate and cast to string
+consecutive parameters:
+
+```js
+logger.info('hello', 'world')
+// {"level":30,"time":1531257618044,"msg":"hello","pid":55956,"hostname":"x"}
+// world is missing
+```
+
+However, it's possible to inject a hook to modify this behavior:
+
+```js
+const pinoOptions = {
+  hooks: { logMethod }
+}
+
+function logMethod (args, method) {
+  if (args.length === 2) {
+    args[0] = `${args[0]} %j`
+  }
+  method.apply(this, args)
+}
+
+const logger = pino(pinoOptions)
+```
+
+* See [`message` log method parameter](#message)
+* See [`logMethod` hook](#logmethod)
+
 

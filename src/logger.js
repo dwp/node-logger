@@ -120,7 +120,6 @@ class Logger {
     const baseLogger = loggerOptions.basicLogging
       ? new BasicLogger(pinoLogger) : pinoLogger;
 
-
     baseLogger.httpLogger = (req, res, next) => {
       Logger.middlewarePrepareRequest(req, res, next, loggerOptions, baseLogger);
     };
@@ -133,15 +132,15 @@ class Logger {
     let specifiedMode = 'api';
 
     switch (typeof mode) {
-    case 'object':
-      specifiedOptions = mode;
-      break;
-    case 'string':
-      specifiedMode = mode;
-      break;
-    default:
-      specifiedMode = 'invalid value';
-      break;
+      case 'object':
+        specifiedOptions = mode;
+        break;
+      case 'string':
+        specifiedMode = mode;
+        break;
+      default:
+        specifiedMode = 'invalid value';
+        break;
     }
 
     Logger.validateOptions(specifiedMode, specifiedOptions);
@@ -302,7 +301,6 @@ class Logger {
     }
   }
 
-
   static validateOptions(mode, options) {
     const modeOption = { mode };
     Logger.validStringOption('mode', modeOption, ['web', 'api', 'web-java-style', 'api-java-style']);
@@ -408,7 +406,6 @@ class Logger {
 
     const openTracing = traceLogger.getChildHttpHeaders(req.span);
 
-
     return openTracing;
   }
 
@@ -445,7 +442,6 @@ class Logger {
 
     return openTracing;
   }
-
 
   // Prepare a logger for all requests. This will make available a `req.log.*()`
   // series of log functions (info, warn, etc).
@@ -491,7 +487,6 @@ class Logger {
     }
 
     req.log = logger.child(traceObj);
-
 
     const reqToLog = {
       method: req.method,

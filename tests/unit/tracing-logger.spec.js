@@ -19,7 +19,6 @@ describe('Open tracing noop tests', () => {
   });
 });
 
-
 describe('Open tracing jaeger tests', () => {
   let testLogger; let traceLogger;
 
@@ -49,7 +48,6 @@ describe('Open tracing jaeger tests', () => {
     done();
   }).timeout(1000);
 
-
   it('should create and log a parent span with two children', (done) => {
     expect(traceLogger).to.be.an('object');
 
@@ -61,7 +59,6 @@ describe('Open tracing jaeger tests', () => {
 
     const grandChildSpan1 = traceLogger.createSpan('testGrandChildOperation1', { parentSpan: childSpan1, component: 'customerRecords' });
     expect(childSpan1).to.be.an('object');
-
 
     let childSpan2;
 
@@ -77,7 +74,6 @@ describe('Open tracing jaeger tests', () => {
       traceLogger.endSpan(parentSpan);
 
       expect(testLogger.logs.length).to.equal(4);
-
 
       done();
     }, 40);
@@ -118,7 +114,6 @@ describe('Open tracing jaeger tests', () => {
     }, 10);
   }).timeout(5000);
 
-
   it('should create and log a child http with invalid headers', (done) => {
     const childSpan = traceLogger.createSpan('testHttpHeaderChildOperation', {
       headers: {
@@ -133,7 +128,6 @@ describe('Open tracing jaeger tests', () => {
     expect(testLogger.logs.length).to.equal(1);
     done();
   }).timeout(5000);
-
 
   it('should create and log a child http operation from headers', (done) => {
     expect(traceLogger).to.be.an('object');

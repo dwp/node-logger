@@ -26,7 +26,6 @@ describe('Logger config', () => {
     removeJaegerEnvVar();
   });
 
-
   it('should export a function', () => {
     expect(Logger).to.be.a('function');
   });
@@ -53,7 +52,6 @@ describe('Logger config', () => {
     expect(logger.loggerOptions.messageKey).to.equal('message');
     expect(logger.loggerOptions.timestampKey).to.equal('time');
 
-
     expect(logger.loggerOptions.enableDebugLoggingLibrary).to.equal(false);
 
     expect(logger.loggerOptions.logRequestHeaders).to.equal(mode === 'web');
@@ -62,7 +60,6 @@ describe('Logger config', () => {
     expect(logger.loggerOptions.excludeRequestPaths.length).to.equal(0);
     expect(logger.httpLogger).to.be.an('function');
   };
-
 
   it('Logger function should create a default logger', () => {
     const logger = Logger();
@@ -121,7 +118,6 @@ describe('Logger config', () => {
     expect(() => Logger('web', 123)).to.throw(TypeError, 'Expected parameter options to be an object');
   });
 
-
   it('Logger function should throw when given an invalid string params', () => {
     expect(() => Logger({
       appName: 123,
@@ -152,7 +148,6 @@ describe('Logger config', () => {
       timestampKey: 123,
     })).to.throw(TypeError, "Expected parameter option 'timestampKey' to be a non-empty string");
   });
-
 
   it('Logger function should throw when given an invalid logLevel param', () => {
     expect(() => Logger({
@@ -199,12 +194,10 @@ describe('Logger config', () => {
       logResponseHeaders: 123,
     })).to.throw(TypeError, "Expected parameter option 'logResponseHeaders' to be a boolean");
 
-
     expect(() => Logger({
       pino: 123,
     })).to.throw(TypeError, "Expected parameter option 'pino' to be an object");
   });
-
 
   it('Logger should create a valid pino configuration', () => {
     const logger = Logger('web', { enableOpenTracing: false });
@@ -219,7 +212,6 @@ describe('Logger config', () => {
     expect(config.redact.remove).to.equal(true);
     expect(config.redact.paths.length).to.equal(2);
   });
-
 
   it('Logger should create a valid pino configuration given a custom config', () => {
     const logger = Logger('web', { enableOpenTracing: false });
@@ -271,7 +263,6 @@ describe('Logger configure property keys', () => {
 
     return itemOutput;
   };
-
 
   it('Keys for a custom style logger', () => {
     checkForKeyPropertiesNames({
@@ -337,7 +328,6 @@ describe('Logger config application details', () => {
       logResponseHeaders: false,
     };
   });
-
 
   afterEach(() => {
     if ('JAEGER_SERVICE_NAME' in process.env) {

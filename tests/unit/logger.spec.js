@@ -7,7 +7,7 @@ const SimulatedLoggerStream = require('../utils/simulated-logger-stream.js');
 
 const { expect } = chai;
 
-const testBasicLogging = (logger, done, op) => {
+const testBasicLogging = (logger, doesprintf, done, op) => {
   const testString1 = 'A simple string';
   const testString2 = 'to output';
 
@@ -23,9 +23,14 @@ const testBasicLogging = (logger, done, op) => {
 
   expect(itemOutput).to.be.an('object');
 
+  if (doesprintf) {
+    expect(itemOutput.message).to.equal(`${testString1}`);
+  } else {
+    expect(itemOutput.message).to.equal(`${testString1} ${testString2}`);
+  }
+
   expect(itemOutput.level).to.equal(op);
   expect(itemOutput.hostname).to.equal(os.hostname());
-  expect(itemOutput.message).to.equal(`${testString1} ${testString2}`);
   expect(itemOutput.pid).to.be.above(0);
   expect(itemOutput[logger.loggerOptions.timestampKey]).to.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/);
 
@@ -49,7 +54,7 @@ describe('Logger in pino mode', () => {
     });
 
     ['trace', 'debug', 'info', 'warn', 'error', 'fatal']
-      .forEach((op) => testBasicLogging(logger, done, op));
+      .forEach((op) => testBasicLogging(logger, true, done, op));
 
     done();
   });
@@ -77,10 +82,11 @@ describe('Logger in pino mode', () => {
       outputStream: new SimulatedLoggerStream(),
     });
 
-    logger.info('test string1', { item1: 'additional1', item2: 'additional2' });
+    logger.info('test string1 %o', { item1: 'additional1', item2: 'additional2' });
     expect(logger.loggerOptions.outputStream.logs.length).to.equal(1);
     const itemOutput = JSON.parse(logger.loggerOptions.outputStream.logs[0]);
     expect(itemOutput).to.be.an('object');
+    expect(itemOutput.level).to.equal('info');
     expect(itemOutput.message).to.equal('test string1 {"item1":"additional1","item2":"additional2"}');
     expect(itemOutput.item1).to.be.undefined; // eslint-disable-line
     expect(itemOutput.item2).to.be.undefined; // eslint-disable-line
@@ -127,7 +133,7 @@ describe('Logger in basic mode', () => {
     });
 
     ['trace', 'debug', 'info', 'warn', 'error', 'fatal']
-      .forEach((op) => testBasicLogging(logger, done, op));
+      .forEach((op) => testBasicLogging(logger, false, done, op));
 
     done();
   });
@@ -242,7 +248,6 @@ describe('Logger in basic mode', () => {
   });
 });
 
-
 describe('Open tracing propogation', () => {
   const req = {
     headers: {
@@ -288,7 +293,6 @@ describe('Open tracing propogation', () => {
   });
 });
 
-
 describe('Check isStatusAnError definitions', () => {
   it('should not be a status error', () => {
     const logger = Logger('web', { enableOpenTracing: false });
@@ -320,7 +324,6 @@ describe('Calc response times', () => {
       redactionPaths: ['req.headers.cookie', 'req.headers.host', 'req.headers.authorization', 'req.headers.accept',
         'req.headers.connection',
         'req.headers["accept-encoding"]', 'req.headers["accept-language"]'],
-
 
     });
 
