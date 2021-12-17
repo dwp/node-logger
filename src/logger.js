@@ -215,17 +215,19 @@ class Logger {
   static createPinoConfig(loggerOptions) {
     const config = {
       base: Logger.createPinoBase(loggerOptions),
-      messageKey: loggerOptions.messageKey,
-      levelKey: loggerOptions.levelKey,
+      formatters: {
+        ...loggerOptions.levelKey && {
+          level: (label) => ({ [loggerOptions.levelKey]: label }),
+        },
+      },
       level: loggerOptions.logLevel,
-      useLevelLabels: true,
-      timestamp: () => `,"${loggerOptions.timestampKey}":"${(new Date()).toISOString()}"`,
+      messageKey: loggerOptions.messageKey,
       redact: {
         paths: loggerOptions.redactionPaths,
         remove: true,
       },
-      serializers: {
-      },
+      timestamp: () => `,"${loggerOptions.timestampKey}":"${(new Date()).toISOString()}"`,
+      serializers: {},
       ...loggerOptions.pino,
     };
 
@@ -365,12 +367,17 @@ class Logger {
     return Math.round(parseInt(`${process.hrtime.bigint() - startTime}`, 10) * 0.001) * 0.001;
   }
 
+  static logNameSpace(responseSent) {
+    return responseSent ? 'http' : 'abandoned';
+  }
+
   static logResponse(params, traceLogger) {
     const commonHTTPResponseLog = `${params.commonHTTPLog} ${params.res.statusCode}`;
 
     const logDetails = {};
 
-    objectPath.set(logDetails, params.options.nameSpaceKey, 'http');
+    objectPath.set(logDetails, params.options.nameSpaceKey,
+      Logger.logNameSpace(params.responseSent));
     objectPath.set(logDetails, params.options.httpMethodKey, params.reqToLog.method);
     objectPath.set(logDetails, params.options.httpUriKey, params.reqToLog.url);
     objectPath.set(logDetails, params.options.httpProtocolKey, params.reqToLog.protocol);
@@ -449,6 +456,7 @@ class Logger {
     // Set up the request object with the logger, id,
     // start time and a function to log the completion
     const startTime = process.hrtime.bigint();
+    let responseSent = false;
 
     let httpLogLevel = 'info';
     if (Logger.filterOutRequest(req, options)) {
@@ -500,10 +508,20 @@ class Logger {
     const commonHTTPLog = `${req.method} ${req.originalUrl} ${req.protocol}/${req.httpVersion}`;
 
     res.on('finish', () => {
+      responseSent = true;
       const resParams = {
-        startTime, httpLogLevel, reqToLog, commonHTTPLog, req, res, options,
+        startTime, httpLogLevel, reqToLog, commonHTTPLog, req, res, options, responseSent,
       };
       Logger.logResponse(resParams, logger.traceLogger);
+    });
+
+    res.on('close', () => {
+      if (!responseSent) {
+        const resParams = {
+          startTime, httpLogLevel, reqToLog, commonHTTPLog, req, res, options, responseSent,
+        };
+        Logger.logResponse(resParams, logger.traceLogger);
+      }
     });
 
     next();

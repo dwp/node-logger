@@ -30,6 +30,8 @@ Most node applications use one of the popular logging libraries such as debug, w
 
 This logging library implements a standard json log format and provides http access logging and request identifiers with minimal configuration.
 
+As well as logging http requests that have been completed this logging library also logs requests that are abandoned by the client and so have no response. These log line items are given the namespace ‘ns’ field value of ‘abandoned’ instead of the usual ‘http’ value.
+
 The library uses pino and gives complete access to all of its features.
 
 This module also contains support for the [Open Tracing](https://opentracing.io) standard and the [Jaeger](https://www.jaegertracing.io) client implementation. The tracing implementation comes for free and requires no additional 
@@ -160,7 +162,7 @@ There are two sets of property names, standard (dwp node standard) and java (nam
 | loggerVersionKey | app.version | logger_version | Version of the application |
 | httpMethodKey | req.method | method | Request http method |
 | httpUriKey | req.url | requested_uri | Request http url |
-| nameSpaceKey | nameSpace | ns | The name space: http. Useful to filter just the http access logs |
+| nameSpaceKey | nameSpace | ns | The name space: either http or abandoned. Useful to filter just the http access logs |
 | httpProtocolKey | req.protocol | protocol | Request protocol |
 | httpReqHeadersKey | req.headers | request_headers | Request http headers |
 | httpRespHeadersKey | res.headers | response_headers | Response http headers |
@@ -468,7 +470,16 @@ The component produces output that matches the default Logstash Logback Encoder 
 | `warn`, `error`, `fatal` | Problems and Errors depending on level of damage | DEV, PROD |
 
 
-## 12. Changes from previous version
+## 12. Changes from previous versions
+
+## Version 1.1.0
+
+- This version uses has switched from pino v6 to v7
+- Fix to remove the annoying depreciation warnings
+- Http requests that are abandoned by the client are now logged. To differentiate them from completed requests they are given the namespace value of 'abandoned'.
+
+
+## From versions < 1 to 1.0.0
 
 This version uses has switched from pino v5 to v6, which has the following functionality change.
 

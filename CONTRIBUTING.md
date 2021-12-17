@@ -14,7 +14,7 @@ We ask you not to submit security concerns via GitHub. For details on submitting
 
 We have a 3 step process for contributions:
 
-1.  Fork our repo and commit changes to a new branch based off `master`, making sure to sign-off those changes for the [Developer Certificate of Origin](#developer-certification-of-origin-dco).
+1.  Fork our repo and commit changes to a new branch based off `main`, making sure to sign-off those changes for the [Developer Certificate of Origin](#developer-certification-of-origin-dco).
 2.  Create a GitHub Pull Request for your change, following the instructions in the pull request template (if present).
 3.  A [Code Review](#code-review-process) will then be undertaken by the project maintainers.
 
@@ -33,7 +33,7 @@ Once you open a pull request, project maintainers will review your code and resp
 
 1.  Two thumbs-up (:+1:) are required from project maintainers.
 2.  When ready, your pull request will be tagged with label `Ready For Merge`.
-3.  Your change will be merged into the project's `master` branch and may be noted in the project's `CHANGELOG.md` at the time of release.
+3.  Your change will be merged into the project's `main` branch and may be noted in the project's `CHANGELOG.md` at the time of release.
 
 ### Developer Certification of Origin (DCO)
 
@@ -96,4 +96,4 @@ We follow the [Semantic Versioning](http://semver.org/) standard. Our standard v
 
 ## Acknowledgements
 
-This guide was originally based upon the [InSpec Contribution Guide](https://github.com/chef/inspec/blob/master/CONTRIBUTING.md).
+This guide was originally based upon the [InSpec Contribution Guide](https://github.com/chef/inspec/blob/main/CONTRIBUTING.md).

@@ -208,7 +208,7 @@ describe('Logger config', () => {
     expect(config.base.pid).to.equal(process.pid);
     expect(config.messageKey).to.equal('message');
     expect(config.level).to.equal('info');
-    expect(config.useLevelLabels).to.equal(true);
+    expect(config.formatters.level('test-label')).to.deep.equal({ level: 'test-label' });
     expect(config.redact.remove).to.equal(true);
     expect(config.redact.paths.length).to.equal(2);
   });

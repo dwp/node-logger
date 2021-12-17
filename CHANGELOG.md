@@ -1,3 +1,12 @@
+# 1.1.0 (2021-12-15)
+
+### Features
+
+* This version uses has switched from pino v6 to v7
+* Fix to remove the annoying depreciation warnings
+* Http requests that are abandoned by the client are now logged. To differentiate them from completed requests they are given the namespace value of 'abandoned'.
+
+
 # [1.0.0](https://github.com/dwp/node-logger/compare/0.14.3...1.0.0) (2021-10-05)
 
 ### Features

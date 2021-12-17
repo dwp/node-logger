@@ -18,7 +18,7 @@ describe('Logger http request logging', () => {
     delete process.env.JAEGER_ENDPOINT;
   }
 
-  const testHTTPReq = (logger, done, expectedLogLevel = 'info', extraheaders) => {
+  const testHTTPReq = (logger, done, expectedLogLevel = 'info', extraheaders, shouldAbandon = false) => {
     const next = sinon.stub();
 
     const req = {
@@ -131,7 +131,7 @@ describe('Logger http request logging', () => {
     const origLog = req.log[expectedLogLevel].bind(req.log);
 
     sinon.stub(req.log, expectedLogLevel).callsFake((value, message) => {
-      expect(value.nameSpace).to.equal('http');
+      expect(value.nameSpace).to.equal(shouldAbandon ? 'abandoned' : 'http');
       expect(value.req.method).to.equal('POST');
       expect(value.req.url).to.equal('/static/js/test.js');
       // must have taken over 19 ticks because we are waiting for 20 ticks
@@ -148,7 +148,7 @@ describe('Logger http request logging', () => {
       }
 
       expect(resLog.level).to.equal(expectedLogLevel);
-      expect(resLog.nameSpace).to.equal('http');
+      expect(resLog.nameSpace).to.equal(shouldAbandon ? 'abandoned' : 'http');
       expect(resLog.message).to.equal('POST /static/js/test.js HTTP/1.1 200');
       expect(resLog.pid).to.be.above(0);
 
@@ -171,8 +171,14 @@ describe('Logger http request logging', () => {
     });
 
     setTimeout(() => {
-      res.emit('finish');
+      res.emit(shouldAbandon ? 'close' : 'finish');
     }, 20);
+
+    if (!shouldAbandon) {
+      setTimeout(() => {
+        res.emit('close');
+      }, 30);
+    }
   };
 
   it('should log a http request with no cookies', (done) => {
@@ -263,5 +269,14 @@ describe('Logger http request logging', () => {
     testHTTPReq(logger, () => {
       logger.closeLogger(done);
     }, 'trace');
+  });
+
+  it('should log an abandon when a request is terminated by the client early', (done) => {
+    const logger = Logger({
+      enableOpenTracing: false,
+      outputStream: new SimulatedLoggerStream(),
+      clientHeaderName: 'X-not-there',
+    });
+    testHTTPReq(logger, done, 'info', { 'x-request-id': 'e1850613-0627-426b-test-a1c3682c7085', 'user-agent': 'client-app' }, true);
   });
 });
